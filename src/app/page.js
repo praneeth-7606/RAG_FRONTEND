@@ -424,6 +424,7 @@ function TabNavigation({ activeTab, setActiveTab, uploadedDocuments, chatHistory
     {
       key: 'upload',
       title: '📄 Upload Documents',
+      shortTitle: 'Upload',
       count: uploadedDocuments.length,
       disabled: false,
       description: 'Upload and process your insurance documents'
@@ -431,6 +432,7 @@ function TabNavigation({ activeTab, setActiveTab, uploadedDocuments, chatHistory
     {
       key: 'chat',
       title: '💬 AI Assistant',
+      shortTitle: 'AI Chat',
       count: chatHistory.length,
       disabled: uploadedDocuments.length === 0,
       description: 'Chat with AI about your policies'
@@ -438,6 +440,7 @@ function TabNavigation({ activeTab, setActiveTab, uploadedDocuments, chatHistory
     {
       key: 'sources',
       title: '🔍 Document Sources',
+      shortTitle: 'Sources',
       count: currentSources.length,
       disabled: currentSources.length === 0,
       description: 'View source references and evidence'
@@ -446,11 +449,11 @@ function TabNavigation({ activeTab, setActiveTab, uploadedDocuments, chatHistory
 
   return (
     <div className="border-b border-white border-opacity-10 bg-slate-900 bg-opacity-80 backdrop-blur-xl">
-      <div className="flex flex-wrap">
+      <div className="flex">
         {tabs.map((tab) => (
           <button
             key={tab.key}
-            className={`group relative flex items-center space-x-3 px-8 py-6 font-semibold text-lg transition-all duration-300 min-w-0 flex-1 sm:flex-none ${
+            className={`group relative flex items-center justify-center flex-1 px-2 sm:px-4 lg:px-8 py-4 sm:py-6 font-semibold text-sm sm:text-lg transition-all duration-300 ${
               activeTab === tab.key
                 ? 'text-blue-400 bg-slate-800 bg-opacity-60'
                 : tab.disabled
@@ -462,25 +465,31 @@ function TabNavigation({ activeTab, setActiveTab, uploadedDocuments, chatHistory
             title={tab.disabled ? `${tab.description} (requires previous steps)` : tab.description}
           >
             {/* Tab Content */}
-            <div className="flex items-center space-x-3 min-w-0">
-              <span className="text-2xl flex-shrink-0">{tab.title.split(' ')[0]}</span>
-              <div className="flex flex-col items-start min-w-0">
-                <span className="truncate">{tab.title.substring(2)}</span>
-                <span className="text-xs opacity-60 hidden sm:block">{tab.description}</span>
+            <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-3 min-w-0">
+              <div className="flex items-center space-x-2 min-w-0">
+                <span className="text-xl sm:text-2xl flex-shrink-0">{tab.title.split(' ')[0]}</span>
+                <div className="flex flex-col items-start min-w-0 hidden sm:block">
+                  <span className="truncate text-xs sm:text-base lg:text-lg">{tab.title.substring(2)}</span>
+                  <span className="text-xs opacity-60 hidden lg:block truncate">{tab.description}</span>
+                </div>
+                {/* Mobile: Show short title below icon */}
+                <div className="block sm:hidden">
+                  <span className="text-xs font-medium">{tab.shortTitle}</span>
+                </div>
               </div>
+              
+              {/* Count Badge */}
+              {tab.count > 0 && (
+                <div className="relative flex-shrink-0">
+                  <span className="bg-blue-500 text-white text-xs sm:text-sm px-2 py-1 rounded-full min-w-[20px] sm:min-w-[24px] text-center font-bold shadow-lg">
+                    {tab.count}
+                  </span>
+                  {activeTab === tab.key && (
+                    <div className="absolute inset-0 bg-blue-400 rounded-full animate-pulse opacity-50"></div>
+                  )}
+                </div>
+              )}
             </div>
-            
-            {/* Count Badge */}
-            {tab.count > 0 && (
-              <div className="relative">
-                <span className="bg-blue-500 text-white text-sm px-2 py-1 rounded-full min-w-[24px] text-center font-bold shadow-lg">
-                  {tab.count}
-                </span>
-                {activeTab === tab.key && (
-                  <div className="absolute inset-0 bg-blue-400 rounded-full animate-pulse opacity-50"></div>
-                )}
-              </div>
-            )}
             
             {/* Active Tab Indicator */}
             {activeTab === tab.key && (
