@@ -1,20 +1,3 @@
-// 'use client'
-// import { useState, useEffect } from 'react'
-
-// export default function ClientWrapper({ children }) {
-//   const [hasMounted, setHasMounted] = useState(false)
-
-//   useEffect(() => {
-//     setHasMounted(true)
-//   }, [])
-
-//   if (!hasMounted) {
-//     return null
-//   }
-
-//   return children
-// }
-
 
 
 import { useState, useEffect } from 'react'

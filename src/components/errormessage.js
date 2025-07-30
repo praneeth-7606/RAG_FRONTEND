@@ -1,17 +1,4 @@
-// import { Alert } from 'react-bootstrap'
-// import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
-// export default function ErrorMessage({ title, message, variant = 'danger' }) {
-//   return (
-//     <Alert variant={variant} className="d-flex align-items-center">
-//       <ExclamationTriangleIcon className="h-5 w-5 me-2" style={{ width: '1.25rem', height: '1.25rem' }} />
-//       <div>
-//         <strong>{title}</strong>
-//         {message && <div>{message}</div>}
-//       </div>
-//     </Alert>
-//   )
-// }
 
 export default function ErrorMessage({ 
   title, 
@@ -221,38 +208,3 @@ export default function ErrorMessage({
   )
 }
 
-// Usage Examples:
-/*
-// Basic error
-<ErrorMessage 
-  title="Upload Failed" 
-  message="The file you selected is too large. Please choose a file smaller than 50MB." 
-  variant="danger"
-  onRetry={handleRetry}
-  onClose={handleClose}
-/>
-
-// Warning message
-<ErrorMessage 
-  title="Rate Limit Warning" 
-  message="You're approaching your API rate limit. Consider slowing down your requests." 
-  variant="warning"
-  onClose={handleClose}
-/>
-
-// Success message
-<ErrorMessage 
-  title="Upload Successful" 
-  message="Your document has been processed and is ready for analysis." 
-  variant="success"
-  onClose={handleClose}
-/>
-
-// Info message
-<ErrorMessage 
-  title="Processing Information" 
-  message="Your document is being processed. This may take a few moments." 
-  variant="info"
-  showIcon={false}
-/>
-*/
