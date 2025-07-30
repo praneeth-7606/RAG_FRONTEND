@@ -352,7 +352,7 @@ export default function SourcesPanel({ sources }) {
             
             {/* Document Sources Content */}
             <Collapse isOpen={expandedDocs[filename]}>
-              <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
+              <div className="p-4 sm:p-8 space-y-4 sm:space-y-6 pb-8">
                 {docSources.map((source, sourceIndex) => (
                   <div key={source.chunk_id} 
                        className="bg-black bg-opacity-20 border border-white border-opacity-10 rounded-2xl p-4 sm:p-6">
