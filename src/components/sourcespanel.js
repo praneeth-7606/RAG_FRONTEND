@@ -1,9 +1,6 @@
 
-
-
 import { useState } from 'react'
 import { FileTextOutlined, HighlightOutlined, DownOutlined, RightOutlined } from '@ant-design/icons'
-
 
 const adaptApiSources = (apiSources = []) => {
   if (!apiSources || apiSources.length === 0) {
@@ -18,7 +15,7 @@ const adaptApiSources = (apiSources = []) => {
       text: source.content,
       relevance_score: relevanceScore,
       
-    
+      // ✅ FIX IS HERE: Ensure chunk_id is always a string
       chunk_id: String(source.chunk_id || ''), // Convert to string
 
       metadata: {
@@ -49,8 +46,8 @@ function Badge({ children, variant = 'primary' }) {
 // Collapse Component
 function Collapse({ isOpen, children }) {
   return (
-    <div className={`transition-all duration-500 ease-in-out overflow-hidden ${
-      isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+    <div className={`transition-all duration-500 ease-in-out overflow-visible ${
+      isOpen ? 'max-h-none opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
     }`}>
       {children}
     </div>
@@ -62,10 +59,7 @@ export default function SourcesPanel({ sources }) {
   const [sortBy, setSortBy] = useState('relevance') // relevance, document, chunk
   const [filterRelevance, setFilterRelevance] = useState('all') // all, high, medium, low
 
-
-
-   const adaptedSources = adaptApiSources(sources);
-
+  const adaptedSources = adaptApiSources(sources);
 
   if (!adaptedSources || adaptedSources.length === 0) {
     return (
@@ -296,10 +290,10 @@ export default function SourcesPanel({ sources }) {
         </div>
       </div>
 
-      {/* Sources List */}
-      <div className="space-y-4 sm:space-y-6 max-h-[600px] sm:max-h-[800px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent pb-16"> 
+      {/* Sources List - FIXED: Removed height restriction and improved visibility */}
+      <div className="space-y-4 sm:space-y-6 pb-16"> 
         {Object.entries(groupedSources).map(([filename, docSources], docIndex) => (
-          <div key={filename} className="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:bg-opacity-8 hover:border-opacity-20">
+          <div key={filename} className="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-3xl overflow-visible shadow-lg transition-all duration-300 hover:bg-opacity-8 hover:border-opacity-20">
             
             {/* Document Header */}
             <div 
@@ -352,7 +346,7 @@ export default function SourcesPanel({ sources }) {
             
             {/* Document Sources Content */}
             <Collapse isOpen={expandedDocs[filename]}>
-              <div className="p-4 sm:p-8 space-y-4 sm:space-y-6 pb-8">
+              <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
                 {docSources.map((source, sourceIndex) => (
                   <div key={source.chunk_id} 
                        className="bg-black bg-opacity-20 border border-white border-opacity-10 rounded-2xl p-4 sm:p-6">
@@ -392,28 +386,28 @@ export default function SourcesPanel({ sources }) {
                       </div>
                     </div>
                     
-                    {/* Source Text */}
-<div 
-  className="relative p-4 sm:p-6 bg-black bg-opacity-20 backdrop-blur-sm rounded-2xl border-l-4" // ✅ FIX: Black background for contrast
-  style={{ borderLeftColor: getRelevanceColor(source.relevance_score) }}
->
-  {/* Quote Marks */}
-  <div className="absolute top-2 sm:top-4 left-2 sm:left-4 text-2xl sm:text-4xl opacity-20" 
-       style={{ color: getRelevanceColor(source.relevance_score) }}>
-    "
-  </div>
-  <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4 text-2xl sm:text-4xl opacity-20" 
-       style={{ color: getRelevanceColor(source.relevance_score) }}>
-    "
-  </div>
-  
-  {/* Text Content */}
-  <div className="px-4 sm:px-8 py-2 sm:py-4">
-    <p className="text-white leading-relaxed text-sm sm:text-lg italic font-medium break-words pb-8">
-      {source.text}
-    </p>
-  </div>
-</div>
+                    {/* Source Text - FIXED: Improved visibility and removed height restrictions */}
+                    <div 
+                      className="relative p-6 sm:p-8 bg-gray-900 bg-opacity-80 backdrop-blur-sm rounded-2xl border-l-4 min-h-fit"
+                      style={{ borderLeftColor: getRelevanceColor(source.relevance_score) }}
+                    >
+                      {/* Quote Marks */}
+                      <div className="absolute top-3 sm:top-4 left-3 sm:left-4 text-2xl sm:text-3xl opacity-20 pointer-events-none" 
+                           style={{ color: getRelevanceColor(source.relevance_score) }}>
+                        "
+                      </div>
+                      <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 text-2xl sm:text-3xl opacity-20 pointer-events-none" 
+                           style={{ color: getRelevanceColor(source.relevance_score) }}>
+                        "
+                      </div>
+                      
+                      {/* Text Content - FIXED: Better spacing and visibility */}
+                      <div className="px-6 sm:px-8 py-4 sm:py-6">
+                        <div className="text-white leading-relaxed text-sm sm:text-base font-normal break-words whitespace-pre-wrap overflow-visible">
+                          {source.text}
+                        </div>
+                      </div>
+                    </div>
                     
                     {/* Source Footer */}
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white border-opacity-10 space-y-2 sm:space-y-0">
