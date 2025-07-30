@@ -407,12 +407,12 @@ export default function SourcesPanel({ sources }) {
     "
   </div>
   
-  {/* Text Content */}
-  <div className="px-4 sm:px-8 py-2 sm:py-4">
-    <p className="text-white leading-relaxed text-sm sm:text-lg italic font-medium break-words">
-      {source.text}
-    </p>
-  </div>
+
+ <div className="px-4 sm:px-8 py-2 sm:py-4">
+  {/* ✅ FIX: Added pb-8 to give the text itself bottom padding */}
+  <p className="text-white leading-relaxed text-sm sm:text-lg italic font-medium break-words pb-8">
+    {source.text}
+  </p>
 </div>
                     
                     {/* Source Footer */}
