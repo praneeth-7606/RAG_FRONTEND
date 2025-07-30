@@ -18,7 +18,7 @@ const adaptApiSources = (apiSources = []) => {
       text: source.content,
       relevance_score: relevanceScore,
       
-   
+    
       chunk_id: String(source.chunk_id || ''), // Convert to string
 
       metadata: {
@@ -297,7 +297,7 @@ export default function SourcesPanel({ sources }) {
       </div>
 
       {/* Sources List */}
-      <div className="space-y-4 sm:space-y-6 max-h-[600px] sm:max-h-[800px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+      <div className="space-y-4 sm:space-y-6 max-h-[600px] sm:max-h-[800px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent pb-16"> 
         {Object.entries(groupedSources).map(([filename, docSources], docIndex) => (
           <div key={filename} className="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-3xl overflow-hidden shadow-lg transition-all duration-300 hover:bg-opacity-8 hover:border-opacity-20">
             
